@@ -56,7 +56,7 @@ static NSDateFormatter *railsDateFormatter = nil;
             return [railsDateFormatter stringFromDate:date];
         }];
         
-        [NSValueTransformer setValueTransformer:booleanValueTransformer forName:MCRailsDateValueTransformerName];
+        [NSValueTransformer setValueTransformer:railsDateValueTransformer forName:MCRailsDateValueTransformerName];
 	}
 }
 
