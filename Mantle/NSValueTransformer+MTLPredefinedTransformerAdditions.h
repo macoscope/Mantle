@@ -20,6 +20,11 @@ extern NSString * const MTLURLValueTransformerName;
 // proper boolean.
 extern NSString * const MTLBooleanValueTransformerName;
 
+
+extern NSString * const MTLBooleanValueTransformerName;
+
+extern NSString * const MCRailsDateValueTransformerName;
+
 @interface NSValueTransformer (MTLPredefinedTransformerAdditions)
 
 // Returns a reversible transformer which will convert an external

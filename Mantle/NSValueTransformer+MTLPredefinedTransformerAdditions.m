@@ -13,6 +13,9 @@
 
 NSString * const MTLURLValueTransformerName = @"MTLURLValueTransformerName";
 NSString * const MTLBooleanValueTransformerName = @"MTLBooleanValueTransformerName";
+NSString * const MCRailsDateValueTransformerName = @"MCRailsDateValueTransformerName";
+
+static NSDateFormatter *railsDateFormatter = nil;
 
 @implementation NSValueTransformer (MTLPredefinedTransformerAdditions)
 
@@ -38,7 +41,22 @@ NSString * const MTLBooleanValueTransformerName = @"MTLBooleanValueTransformerNa
 				return (NSNumber *)(boolean.boolValue ? kCFBooleanTrue : kCFBooleanFalse);
 			}];
 
-		[NSValueTransformer setValueTransformer:booleanValueTransformer forName:MTLBooleanValueTransformerName];
+        
+		
+        railsDateFormatter = [[NSDateFormatter alloc] init];
+        [railsDateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+        
+        [NSValueTransformer setValueTransformer:booleanValueTransformer forName:MTLBooleanValueTransformerName];
+        
+        
+        MTLValueTransformer *railsDateValueTransformer = [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id string) {
+            return [railsDateFormatter dateFromString:string];
+
+        } reverseBlock:^id(id date) {
+            return [railsDateFormatter stringFromDate:date];
+        }];
+        
+        [NSValueTransformer setValueTransformer:booleanValueTransformer forName:MCRailsDateValueTransformerName];
 	}
 }
 
