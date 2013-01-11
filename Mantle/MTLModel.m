@@ -82,7 +82,9 @@ static void *MTLModelCachedPropertyKeysKey = &MTLModelCachedPropertyKeysKey;
 	NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:externalRepresentation.count];
 
 	for (NSString *propertyKey in self.class.propertyKeys) {
-		NSString *externalKeyPath = externalKeyPathsByPropertyKey[propertyKey] ?: propertyKey;
+    
+		//NSString *externalKeyPath = externalKeyPathsByPropertyKey[propertyKey] ?: propertyKey;
+    NSString *externalKeyPath = [externalKeyPathsByPropertyKey objectForKey:propertyKey] ?: propertyKey;
 
 		id value = [externalRepresentation valueForKeyPath:externalKeyPath];
 		if (value == nil) continue;
@@ -198,7 +200,9 @@ static void *MTLModelCachedPropertyKeysKey = &MTLModelCachedPropertyKeysKey;
 			value = [transformer reverseTransformedValue:value] ?: NSNull.null;
 		}
 
-		NSString *externalKeyPath = externalKeyPathsByPropertyKey[propertyKey] ?: propertyKey;
+    //NSString *externalKeyPath = externalKeyPathsByPropertyKey[propertyKey] ?: propertyKey;
+    NSString *externalKeyPath = [externalKeyPathsByPropertyKey objectForKey:propertyKey] ?: propertyKey;
+
 		NSArray *keyPathComponents = [externalKeyPath componentsSeparatedByString:@"."];
 
 		if (![value isEqual:NSNull.null]) {
